@@ -5,7 +5,7 @@ from flask import Flask, render_template, jsonify
 
 app = Flask(__name__)
 
-client = OpenAI(api_key="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")
+client = OpenAI(api_key="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")
 engine = pyttsx3.init()
 
 @app.route('/')
@@ -37,12 +37,20 @@ def execute_function():# if you change this name, you have to change the functio
 
             if text:
                 print(f"You said: {text}")
-                # Generate response using AutoGPT and data from data.txt as context
-                response = generate_response(text, data)
-                print(f"The answer you desired is: {response}")
-                # Speak the response
-                speak_text(response)
-                return jsonify({'message': response})
+                if text =="who is the head of visual computing lab":
+                    speak_text("The head of visaul computing lab is Samuel")
+                    return jsonify({'message': "The head of visaul computing lab is Samuel"})
+                if text == "explain Tushar project":
+                    speak_text(data)
+                    return jsonify({'message': data})
+                elif text:
+                        
+                    # Generate response using AutoGPT and data from data.txt as context
+                    response = generate_response(text, data)
+                    print(f"The answer you desired is: {response}")
+                    # Speak the response
+                    speak_text(response)
+                    return jsonify({'message': response})
             else:
                 print("Error: Could not transcribe audio to text")
                 return jsonify({'message': 'Error: Could not transcribe audio to text'})
@@ -72,8 +80,8 @@ def generate_response(prompt, context):
 
 def speak_text(text):
     engine.say(text)
-    print("done speaking part 1")
-    print("done speaking")
+    engine.runAndWait()
+
 
 if __name__ == '__main__':
     app.run(debug=True)
