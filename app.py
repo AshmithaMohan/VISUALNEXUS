@@ -5,7 +5,7 @@ from flask import Flask, render_template, jsonify
 
 app = Flask(__name__)
 
-client = OpenAI(api_key="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")
+client = OpenAI(api_key="")
 engine = pyttsx3.init()
 
 @app.route('/')
